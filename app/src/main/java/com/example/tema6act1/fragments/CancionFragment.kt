@@ -1,32 +1,36 @@
 package com.example.tema6act1.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.tema6act1.R
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tema6act1.adapters.CancionAdapter
+import com.example.tema6act1.adapters.EventoCancion
+import com.example.tema6act1.databinding.FragmentCancionBinding
+import com.example.tema6act1.pojos.Cancion
+import com.example.tema6act1.pojos.Disco
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CancionFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class CancionFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    lateinit var binding: FragmentCancionBinding
+    lateinit var cancionAdapter: CancionAdapter
+    lateinit var linearLayoutManager: LinearLayoutManager
+    lateinit var itemDecoration: DividerItemDecoration
+    lateinit var eventoCancion: EventoCancion
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    companion object {
+        // Método para crear la instancia del fragmento y pasar el disco
+        fun newInstance(disco: Disco): CancionFragment {
+            val fragment = CancionFragment()
+            val bundle = Bundle()
+            bundle.putSerializable("disco", disco)
+            fragment.arguments = bundle
+            return fragment
         }
     }
 
@@ -34,27 +38,27 @@ class CancionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cancion, container, false)
-    }
+        // Inicializar el binding antes de inflar la vista
+        binding = FragmentCancionBinding.inflate(inflater, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CancionFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CancionFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        val disco = arguments?.getSerializable("disco") as? Disco
+        if (disco != null) {
+            val listadoCanciones = disco.canciones
+            eventoCancion = requireActivity() as EventoCancion // Obtener el EventoCancion de la actividad
+            cancionAdapter = CancionAdapter(listadoCanciones, eventoCancion) // Pasar los parámetros al adaptador
+            linearLayoutManager = LinearLayoutManager(context)
+            itemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+
+            binding.rvCancionFragment.apply {
+                adapter = cancionAdapter
+                layoutManager = linearLayoutManager
+                addItemDecoration(itemDecoration)
             }
+        } else {
+            Log.e("CancionFragment", "No se pasó el disco correctamente.")
+        }
+
+        return binding.root // Devolver la vista raíz
     }
 }
+

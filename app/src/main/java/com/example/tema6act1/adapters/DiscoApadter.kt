@@ -1,6 +1,5 @@
 package com.example.tema6act1.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,7 @@ import com.example.tema6act1.databinding.ItemDiscoBinding
 
 import com.example.tema6act1.pojos.Disco
 
-class DiscoApadter(var lista: ArrayList<Disco>) : RecyclerView.Adapter<DiscoApadter.ViewHolder>() {
-    lateinit var context: Context
+class DiscoApadter(var lista: List<Disco>, var evento:EventoDisco) : RecyclerView.Adapter<DiscoApadter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemDiscoBinding.bind(view)
@@ -20,18 +18,21 @@ class DiscoApadter(var lista: ArrayList<Disco>) : RecyclerView.Adapter<DiscoApad
             binding.tvNombreDisco.text = disco.nombre
             binding.tvNombreGrupo.text = disco.grupo
             binding.tvAnyoDisc.text = disco.anyo
+            setEventoDiscos(disco)
         }
-
+        private fun setEventoDiscos(disco: Disco) {
+            binding.root.setOnClickListener {
+                evento.verCanciones(disco)
+            }
+        }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_disco, parent, false)
         )
     }
-
     override fun getItemCount(): Int = lista.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        return holder.render(lista[position])
+        holder.render(lista[position])
     }
 }

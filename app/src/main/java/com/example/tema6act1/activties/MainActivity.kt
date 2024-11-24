@@ -1,18 +1,23 @@
 package com.example.tema6act1.activties
 
 import android.os.Bundle
+import android.view.View
+import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tema6act1.R
-import com.example.tema6act1.adapters.DiscoApadter
+import com.example.tema6act1.adapters.EventoCancion
+import com.example.tema6act1.adapters.EventoDisco
 import com.example.tema6act1.databinding.ActivityMainBinding
+import com.example.tema6act1.fragments.CancionFragment
 import com.example.tema6act1.fragments.DiscoFragment
-import com.example.tema6act1.pojos.DatosDiscos
+import com.example.tema6act1.pojos.Cancion
+import com.example.tema6act1.pojos.Disco
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), EventoDisco, EventoCancion{
     lateinit var binding: ActivityMainBinding
 
 
@@ -27,12 +32,40 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Iniciamos en La lista de discos
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragmentDiscos, DiscoFragment())
-        // transaction.addToBackStack(null)  // Solo lo agregas si no está ya en el back stack
-        transaction.commitNow()
-
-
+        // Iniciamos el fragmento de discos
+        if (savedInstanceState == null) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentDiscos, DiscoFragment())
+            transaction.commitNow()
+        }
     }
+
+
+    override fun verCanciones(disco: Disco) {
+//        // Ocultar el fragmento de discos
+//        findViewById<FrameLayout>(R.id.fragmentDiscos).visibility = View.GONE
+//
+//        // Mostrar el fragmento de canciones
+//        findViewById<FrameLayout>(R.id.fragmentCanciones).visibility = View.VISIBLE
+
+        // Crear y reemplazar el fragmento CancionFragment
+        val cancionFragment = CancionFragment.newInstance(disco)
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentCanciones, cancionFragment)
+        transaction.addToBackStack(null)  // Opcional, solo si quieres permitir retroceder
+        transaction.commit()
+    }
+
+    override fun mostrarDetalleCancion(cancion: Cancion) {
+        Toast.makeText(this, "${cancion.num} - ${cancion.duracion}", Toast.LENGTH_SHORT).show()
+    }
+
+
+//    fun volverMain(){
+//        // Ocultar el fragmento de discos
+//        findViewById<FrameLayout>(R.id.fragmentDiscos).visibility = View.VISIBLE
+//
+////        // Mostrar el fragmento de canciones
+////        findViewById<FrameLayout>(R.id.fragmentCanciones).visibility = View.GONE
+//    }
 }

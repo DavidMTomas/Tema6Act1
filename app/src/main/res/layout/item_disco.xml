@@ -29,22 +29,24 @@
 
             <TextView
                 android:id="@+id/tvNombreDisco"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imDisco"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="CANCION DE DISCO" />
 
             <TextView
                 android:id="@+id/tvNombreGrupo"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:textSize="15dp"
                 app:layout_constraintStart_toEndOf="@+id/imDisco"
                 app:layout_constraintTop_toBottomOf="@+id/tvNombreDisco"
+                app:layout_constraintEnd_toStartOf="@+id/tvAnyoDisc"
                 tools:text="CANCION DE DISCO" />
 
 
@@ -54,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:textSize="15dp"
-                app:layout_constraintStart_toEndOf="@+id/tvNombreDisco"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvNombreDisco"
                 tools:text="1990" />
 

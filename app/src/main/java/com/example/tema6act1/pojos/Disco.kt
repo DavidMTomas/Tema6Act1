@@ -1,12 +1,14 @@
 package com.example.tema6act1.pojos
 
+import java.io.Serializable
+
 class Disco(
     val imagen: Int?,
     val nombre: String,
     val grupo: String,
     val anyo: String,
     val canciones: ArrayList<Cancion>
-) {
+):Serializable {
 
     // Con los atributos privados el adapter no muestra cada uno de los atributos
     // cada item aparecia con el atributo del nombre????
