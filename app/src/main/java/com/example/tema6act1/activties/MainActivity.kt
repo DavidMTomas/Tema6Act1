@@ -20,7 +20,6 @@ import com.example.tema6act1.pojos.Disco
 class MainActivity : AppCompatActivity(), EventoDisco, EventoCancion{
     lateinit var binding: ActivityMainBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -31,7 +30,6 @@ class MainActivity : AppCompatActivity(), EventoDisco, EventoCancion{
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         // Iniciamos el fragmento de discos
         if (savedInstanceState == null) {
             val transaction = supportFragmentManager.beginTransaction()
@@ -39,16 +37,7 @@ class MainActivity : AppCompatActivity(), EventoDisco, EventoCancion{
             transaction.commitNow()
         }
     }
-
-
     override fun verCanciones(disco: Disco) {
-//        // Ocultar el fragmento de discos
-//        findViewById<FrameLayout>(R.id.fragmentDiscos).visibility = View.GONE
-//
-//        // Mostrar el fragmento de canciones
-//        findViewById<FrameLayout>(R.id.fragmentCanciones).visibility = View.VISIBLE
-
-        // Crear y reemplazar el fragmento CancionFragment
         val cancionFragment = CancionFragment.newInstance(disco)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragmentCanciones, cancionFragment)
@@ -56,11 +45,10 @@ class MainActivity : AppCompatActivity(), EventoDisco, EventoCancion{
         transaction.commit()
     }
 
+    //Metodo de evento lista
     override fun mostrarDetalleCancion(cancion: Cancion) {
         Toast.makeText(this, "${cancion.num} - ${cancion.duracion}", Toast.LENGTH_SHORT).show()
     }
-
-
 //    fun volverMain(){
 //        // Ocultar el fragmento de discos
 //        findViewById<FrameLayout>(R.id.fragmentDiscos).visibility = View.VISIBLE

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tema6act1.adapters.CancionAdapter
 import com.example.tema6act1.adapters.EventoCancion
 import com.example.tema6act1.databinding.FragmentCancionBinding
-import com.example.tema6act1.pojos.Cancion
 import com.example.tema6act1.pojos.Disco
 
 
@@ -22,7 +21,6 @@ class CancionFragment : Fragment() {
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var itemDecoration: DividerItemDecoration
     lateinit var eventoCancion: EventoCancion
-
     companion object {
         // Método para crear la instancia del fragmento y pasar el disco
         fun newInstance(disco: Disco): CancionFragment {
@@ -30,17 +28,14 @@ class CancionFragment : Fragment() {
             val bundle = Bundle()
             bundle.putSerializable("disco", disco)
             fragment.arguments = bundle
-            return fragment
-        }
+            return fragment  }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inicializar el binding antes de inflar la vista
         binding = FragmentCancionBinding.inflate(inflater, container, false)
-
         val disco = arguments?.getSerializable("disco") as? Disco
         if (disco != null) {
             val listadoCanciones = disco.canciones
@@ -55,9 +50,7 @@ class CancionFragment : Fragment() {
                 addItemDecoration(itemDecoration)
             }
         } else {
-            Log.e("CancionFragment", "No se pasó el disco correctamente.")
-        }
-
+            Log.e("CancionFragment", "No se pasó el disco correctamente.")        }
         return binding.root // Devolver la vista raíz
     }
 }

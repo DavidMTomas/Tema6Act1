@@ -9,7 +9,8 @@ import com.example.tema6act1.databinding.ItemDiscoBinding
 
 import com.example.tema6act1.pojos.Disco
 
-class DiscoApadter(var lista: List<Disco>, var evento:EventoDisco) : RecyclerView.Adapter<DiscoApadter.ViewHolder>() {
+class DiscoApadter(var lista: List<Disco>, var evento:EventoDisco)
+    : RecyclerView.Adapter<DiscoApadter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemDiscoBinding.bind(view)
@@ -28,7 +29,8 @@ class DiscoApadter(var lista: List<Disco>, var evento:EventoDisco) : RecyclerVie
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_disco, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_disco,
+                parent, false)
         )
     }
     override fun getItemCount(): Int = lista.size
